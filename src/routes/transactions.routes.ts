@@ -29,4 +29,22 @@ transactionRouter.post('/', async (request, response) => {
   return response.json(transaction);
 });
 
+transactionRouter.delete('/:id', async (req, res) => {
+  const transactionsRepository = getCustomRepository(TransactionsRepository);
+
+  const { id } = req.params;
+
+  console.log(id);
+
+  const transaction = await transactionsRepository.find({
+    where: { id },
+  });
+
+  console.log(transaction);
+
+  const result = await transactionsRepository.remove(transaction);
+
+  return res.json(result);
+});
+
 export default transactionRouter;
